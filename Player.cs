@@ -23,7 +23,6 @@ namespace lemonadeStandGame
             AddItems();
             balance = 20;
             SetName();
-            BuyItems();
         }
 
         // member methods
