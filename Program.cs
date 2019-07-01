@@ -6,7 +6,7 @@ namespace lemonadeStandGame
     {
         static void Main(string[] args)
         {
-            Weather weather = new Weather();
+            Player player = new Player();
         }
     }
 }

@@ -18,44 +18,14 @@ namespace lemonadeStandGame
         }
 
         // member methods
-        public void AddPaperCups(int boughtPaperCups)
+        public void AddItem()
         {
-            paperCups += boughtPaperCups;
+
         }
 
-        public void RemovePaperCups(int soldPaperCups)
+        public void RemoveItem()
         {
-            paperCups -= soldPaperCups;
-        }
-
-        public void AddLemons(int boughtLemons)
-        {
-            lemons += boughtLemons;
-        }
-
-        public void RemoveLemons(int soldLemons)
-        {
-            lemons -= soldLemons;
-        }
-
-        public void AddCupsOfSugar(int boughtCupsOfSugar)
-        {
-            cupsOfSugar += boughtCupsOfSugar;
-        }
-
-        public void RemoveCupsOfSugar(int soldCupsOfSugar)
-        {
-            cupsOfSugar -= soldCupsOfSugar;
-        }
-
-        public void AddIceCubes(int boughtIceCubes)
-        {
-            iceCubes += boughtIceCubes;
-        }
-
-        public void RemoveIceCubes(int soldIceCubes)
-        {
-            iceCubes -= soldIceCubes;
+            
         }
     }
 }
