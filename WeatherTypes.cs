@@ -8,5 +8,6 @@ namespace lemonadeStandGame
         PartlySunny,
         Hazy,
         Overcast,
+        Snowy
     }
 }
