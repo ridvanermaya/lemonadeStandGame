@@ -5,8 +5,8 @@ namespace lemonadeStandGame
     public class Weather
     {
         // Member variables
-        public WeatherTypes currentForecast {get; set;}
-        public int currentTemperature {get; set;}
+        public WeatherTypes dailyForecast {get; set;}
+        public int dailyTemperature {get; set;}
         private Random rng;
 
         // Constructor
@@ -17,14 +17,20 @@ namespace lemonadeStandGame
         // Member Methods
         public void SetRandomWeather()
         {
-            var randomNumber = rng.Next(0, 7);
-            currentForecast = (WeatherTypes)randomNumber;
+            var randomNumber = rng.Next(0, 6);
+            dailyForecast = (WeatherTypes)randomNumber;
         }
 
         public void SetRandomTemperature()
         {
             var randomNumber = rng.Next(50, 100);
-            currentTemperature = randomNumber;
+            dailyTemperature = randomNumber;
+        }
+
+        public void SetDailyWeather()
+        {
+            SetRandomTemperature();
+            SetRandomWeather();
         }
     }
 }
