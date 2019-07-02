@@ -14,6 +14,10 @@ namespace lemonadeStandGame
         public Items cupsOfSugar {get; set;}
         public Items iceCubes {get; set;}
         public bool sufficentBalance;
+        int pricePerCup;
+        int lemonsPerPitcher;
+        int cupsOfSugarPerPitcher;
+        int iceCubesPerCup;
 
         // constructor
         public Player(){
@@ -33,24 +37,80 @@ namespace lemonadeStandGame
             name = Console.ReadLine();
         }
 
+        public void SetPricePerCup()
+        {
+            int amount;
+            bool validInput;
+            string userInput;
+            Console.WriteLine("Price per Cup? [cents]");
+            do
+            {
+                userInput = Console.ReadLine();
+                validInput = int.TryParse(userInput, out amount);
+                if (!validInput){
+                    Console.WriteLine("Plese enter a number.. Price per Cup? [cents]");
+                }
+            } while (!validInput);
+            pricePerCup = amount;
+        }
+
+        public void SetLemonsPerPitcher()
+        {
+            int amount;
+            bool validInput;
+            string userInput;
+            Console.WriteLine("Amount of Lemons per Pitcher?");
+            do
+            {
+                userInput = Console.ReadLine();
+                validInput = int.TryParse(userInput, out amount);
+                if (!validInput){
+                    Console.WriteLine("Please enter a number.. Amount of Lemons per Pitcher?");
+                }
+            } while (!validInput);
+            lemonsPerPitcher = amount;
+        }
+
+        public void SetCupsOfSugarPerPitcher() 
+        {
+            int amount;
+            bool validInput;
+            string userInput;
+            Console.WriteLine("Cups of Sugar per Pitcher?");
+            do
+            {
+                userInput = Console.ReadLine();
+                validInput = int.TryParse(userInput, out amount);
+                if (!validInput){
+                    Console.WriteLine("Please enter a number... Cups of Suger per Pitcher?");
+                }
+            } while (!validInput);
+            cupsOfSugarPerPitcher = amount;
+        }
+
+        public void SetIceCubesPerCup()
+        {
+            int amount;
+            bool validInput;
+            string userInput;
+            Console.WriteLine("Amount of Ice Cubes per Cup?");
+            do
+            {
+                userInput = Console.ReadLine();
+                validInput = int.TryParse(userInput, out amount);
+                if (!validInput){
+                    Console.WriteLine("Please enter a number... Amount of Ice Cubes per Cup?");
+                }
+            } while (!validInput);
+            iceCubesPerCup = amount;
+        }
         public void CreateRecipe()
         {
             Console.WriteLine("Creating Recipe for the day!");
-            Console.Write("Price per Cup? [cents]");
-            int pricePerCup = Convert.ToInt32(Console.ReadLine());
-            Console.Write("How many [Lemons] per Pitcher?");
-            int lemonsPerPitcher = Convert.ToInt32(Console.ReadLine());
-            Console.Write("How many [cups of sugar] per Pitcher?");
-            int cupsOfSugarPePitcher = Convert.ToInt32(Console.ReadLine());
-            Console.Write("How many [ice cubes] per Cup?");
-            int iceCubesPerCup = Convert.ToInt32(Console.ReadLine());
-        }
-
-        public void EachItemInRecipe(Items item)
-        {
-            Console.WriteLine($"How many {item.name} would you like to use per Pitcher?");
-            int amount = Convert.ToInt32(Console.ReadLine());
-
+            SetPricePerCup();
+            SetLemonsPerPitcher();
+            SetCupsOfSugarPerPitcher();
+            SetIceCubesPerCup();
         }
 
         public void DisplayInventory()
@@ -105,8 +165,7 @@ namespace lemonadeStandGame
                         Console.WriteLine($"Please enter a number.. How many {item.name} would you like to buy? (Price for each: ${item.price}");
                     }
                 } while (!validInput);
-                
-                
+
                 if (balance >= (amount * item.price)) {
                     balance -= amount * item.price;
                     Console.WriteLine("Purchase successfull!");
@@ -118,11 +177,6 @@ namespace lemonadeStandGame
                     sufficentBalance = false;
                 }
             }
-        }
-
-        public void ValidateIfInteger(string input)
-        {
-
         }
     }
 }

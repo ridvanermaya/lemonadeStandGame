@@ -10,6 +10,7 @@ namespace lemonadeStandGame
         Day day;
         Customer customer;
         Store store;
+
         // constructor
         public Game()
         {
@@ -22,6 +23,7 @@ namespace lemonadeStandGame
             Console.WriteLine("Welcome to Lemonade Stand Game");
             player = new Player();
             player.BuyItems();
+            player.CreateRecipe();
         }
     }
 }

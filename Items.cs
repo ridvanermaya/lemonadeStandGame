@@ -14,14 +14,5 @@ namespace lemonadeStandGame
         }
 
         // member methods
-        public void AddItem()
-        {
-
-        }
-
-        public void RemoveItem()
-        {
-
-        }
     }
 }
