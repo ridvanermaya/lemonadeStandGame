@@ -13,6 +13,7 @@ namespace lemonadeStandGame
         public Items lemons {get; set;}
         public Items cupsOfSugar {get; set;}
         public Items iceCubes {get; set;}
+        public bool SufficentBalance;
 
         // constructor
         public Player(){
@@ -30,11 +31,6 @@ namespace lemonadeStandGame
         {
             Console.Write("\nPlease enter player name: ");
             name = Console.ReadLine();
-        }
-
-        public void BuyItems()
-        {
-
         }
 
         public void CreateRecipe()
@@ -66,6 +62,36 @@ namespace lemonadeStandGame
             iceCubes.name = "icecubes";
             iceCubes.amount = 0;
             iceCubes.price = 0.01;
+        }
+
+
+        public void BuyItems()
+        {
+            BuyItem(paperCups);
+            BuyItem(lemons);
+            BuyItem(cupsOfSugar);
+            BuyItem(iceCubes);
+        }
+
+        public void BuyItem(Items item)
+        {
+            SufficentBalance = false;
+            DisplayInventory();
+            while(!SufficentBalance){
+                Console.WriteLine($"Your current balance is ${balance}");
+                Console.WriteLine($"How many {item.name} would you like to buy? (Price for each: ${item.price})");
+                int amount = Convert.ToInt32(Console.ReadLine());
+                if (balance >= (amount * item.price)) {
+                    balance -= amount * item.price;
+                    Console.WriteLine("Purchase successfull!");
+                    SufficentBalance = true;
+                    item.amount += amount;
+                }
+                else {
+                    Console.WriteLine("Purchase unsuccessfull. Reason: Insufficient funds!");
+                    SufficentBalance = false;
+                }
+            }
         }
     }
 }
