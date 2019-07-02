@@ -7,7 +7,6 @@ namespace lemonadeStandGame
         // member variables
         Player player;
         Day day;
-        Customer customer;
         Store store;
 
         // constructor
@@ -21,7 +20,6 @@ namespace lemonadeStandGame
         {
             Console.Clear();
             day = new Day();
-            customer = new Customer();
             player = new Player();
             Greeting();
             player.SetName();
