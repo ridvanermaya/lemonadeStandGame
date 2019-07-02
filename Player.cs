@@ -13,7 +13,7 @@ namespace lemonadeStandGame
         public Items lemons {get; set;}
         public Items cupsOfSugar {get; set;}
         public Items iceCubes {get; set;}
-        public bool SufficentBalance;
+        public bool sufficentBalance;
 
         // constructor
         public Player(){
@@ -35,6 +35,21 @@ namespace lemonadeStandGame
 
         public void CreateRecipe()
         {
+            Console.WriteLine("Creating Recipe for the day!");
+            Console.Write("Price per Cup? [cents]");
+            int pricePerCup = Convert.ToInt32(Console.ReadLine());
+            Console.Write("How many [Lemons] per Pitcher?");
+            int lemonsPerPitcher = Convert.ToInt32(Console.ReadLine());
+            Console.Write("How many [cups of sugar] per Pitcher?");
+            int cupsOfSugarPePitcher = Convert.ToInt32(Console.ReadLine());
+            Console.Write("How many [ice cubes] per Cup?");
+            int iceCubesPerCup = Convert.ToInt32(Console.ReadLine());
+        }
+
+        public void EachItemInRecipe(Items item)
+        {
+            Console.WriteLine($"How many {item.name} would you like to use per Pitcher?");
+            int amount = Convert.ToInt32(Console.ReadLine());
 
         }
 
@@ -64,7 +79,6 @@ namespace lemonadeStandGame
             iceCubes.price = 0.01;
         }
 
-
         public void BuyItems()
         {
             BuyItem(paperCups);
@@ -75,23 +89,40 @@ namespace lemonadeStandGame
 
         public void BuyItem(Items item)
         {
-            SufficentBalance = false;
+            int amount;
+            string userInput;
+            bool validInput;
+            sufficentBalance = false;
             DisplayInventory();
-            while(!SufficentBalance){
+            while(!sufficentBalance){
                 Console.WriteLine($"Your current balance is ${balance}");
-                Console.WriteLine($"How many {item.name} would you like to buy? (Price for each: ${item.price})");
-                int amount = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine($"How many {item.name} would you like to buy? (Price for each: ${item.price})"); 
+                do
+                {
+                    userInput = Console.ReadLine();
+                    validInput = int.TryParse(userInput, out amount);
+                    if (!validInput){
+                        Console.WriteLine($"Please enter a number.. How many {item.name} would you like to buy? (Price for each: ${item.price}");
+                    }
+                } while (!validInput);
+                
+                
                 if (balance >= (amount * item.price)) {
                     balance -= amount * item.price;
                     Console.WriteLine("Purchase successfull!");
-                    SufficentBalance = true;
+                    sufficentBalance = true;
                     item.amount += amount;
                 }
                 else {
                     Console.WriteLine("Purchase unsuccessfull. Reason: Insufficient funds!");
-                    SufficentBalance = false;
+                    sufficentBalance = false;
                 }
             }
+        }
+
+        public void ValidateIfInteger(string input)
+        {
+
         }
     }
 }
