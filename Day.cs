@@ -3,10 +3,13 @@ namespace lemonadeStandGame
     public class Day
     {
         // member variables
-        Weather dailyweather;
-        
-        // constructor
+        public Weather dailyweather;
 
+        // constructor
+        public Day()
+        {
+            dailyweather = new Weather();
+        }
         // member methods
     }
 }
