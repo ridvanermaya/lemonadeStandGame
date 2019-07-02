@@ -1,18 +1,18 @@
+using System;
+
 namespace lemonadeStandGame
 {
-    public class pitcher
+    public class Pitcher
     {
         // member variables (has a)
-        int cupsInPitcher;
-        int cupsOfSugarPerPitcher;
-        int lemonsPerPitcher;
+        public int cupsInPitcher;
+
 
         // constructor
-
-        // member methods
-        public void PreparePitcher(int cupsInPitcher, int lemonsPerPitcher)
+        public Pitcher()
         {
-            
+
         }
+        // member methods
     }
 }

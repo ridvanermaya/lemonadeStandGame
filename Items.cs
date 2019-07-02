@@ -3,9 +3,9 @@ namespace lemonadeStandGame
     public class Items
     {
         // member variables
-        public string name {get; set;}
-        public double price {get; set;}
-        public int amount {get; set;}
+        public string name;
+        public double price;
+        public int amount;
 
         // constructor
         public Items()

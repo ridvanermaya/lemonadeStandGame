@@ -6,13 +6,9 @@ namespace lemonadeStandGame
     public class Player
     {
         // member variables
-        public string name {get; set;}
-        public double balance {get; set;}
-        public List<Items> itemList;
-        public Items paperCups {get; set;}
-        public Items lemons {get; set;}
-        public Items cupsOfSugar {get; set;}
-        public Items iceCubes {get; set;}
+        public string name;
+        public double balance;
+        public Inventory inventory;
         public bool sufficentBalance;
         int pricePerCup;
         int lemonsPerPitcher;
@@ -21,16 +17,24 @@ namespace lemonadeStandGame
 
         // constructor
         public Player(){
-            paperCups = new Items();
-            lemons = new Items();
-            cupsOfSugar = new Items();
-            iceCubes = new Items();
-            AddItems();
+            inventory = new Inventory();
             balance = 20;
-            SetName();
         }
 
         // member methods
+        public void PreparePitcher()
+        {
+            if (inventory.cupsOfSugar.amount >= cupsOfSugarPerPitcher && 
+                inventory.lemons.amount >= lemonsPerPitcher){
+                inventory.cupsOfSugar.amount -= cupsOfSugarPerPitcher;
+                inventory.lemons.amount -= lemonsPerPitcher;
+                inventory.pitcher.cupsInPitcher = 12;
+            }
+            else {
+                Console.WriteLine("You don't have necessary items to make lemonade.");
+            }
+        }
+
         public void SetName()
         {
             Console.Write("\nPlease enter player name: ");
@@ -104,6 +108,7 @@ namespace lemonadeStandGame
             } while (!validInput);
             iceCubesPerCup = amount;
         }
+        
         public void CreateRecipe()
         {
             Console.WriteLine("Creating Recipe for the day!");
@@ -113,38 +118,12 @@ namespace lemonadeStandGame
             SetIceCubesPerCup();
         }
 
-        public void DisplayInventory()
-        {
-            Console.WriteLine($"Paper Cups: {paperCups.amount}, Lemons: {lemons.amount}, Cups of Sugar: {cupsOfSugar.amount}, Ice Cubes: {iceCubes.amount}");
-        }
-
-        public void AddItems()
-        {
-            itemList = new List<Items>();
-            itemList.Add(paperCups);
-            itemList.Add(lemons);
-            itemList.Add(cupsOfSugar);
-            itemList.Add(iceCubes);
-            paperCups.name = "papercups";
-            paperCups.amount = 0;
-            paperCups.price = 0.02;
-            lemons.name = "lemons";
-            lemons.amount = 0;
-            lemons.price = 0.04;
-            cupsOfSugar.name = "cupsofsugar";
-            cupsOfSugar.amount = 0;
-            cupsOfSugar.price = 0.04;
-            iceCubes.name = "icecubes";
-            iceCubes.amount = 0;
-            iceCubes.price = 0.01;
-        }
-
         public void BuyItems()
         {
-            BuyItem(paperCups);
-            BuyItem(lemons);
-            BuyItem(cupsOfSugar);
-            BuyItem(iceCubes);
+            BuyItem(inventory.paperCups);
+            BuyItem(inventory.lemons);
+            BuyItem(inventory.cupsOfSugar);
+            BuyItem(inventory.iceCubes);
         }
 
         public void BuyItem(Items item)
@@ -153,7 +132,7 @@ namespace lemonadeStandGame
             string userInput;
             bool validInput;
             sufficentBalance = false;
-            DisplayInventory();
+            inventory.DisplayInventory();
             while(!sufficentBalance){
                 Console.WriteLine($"Your current balance is ${balance}");
                 Console.WriteLine($"How many {item.name} would you like to buy? (Price for each: ${item.price})"); 
