@@ -133,7 +133,7 @@ namespace lemonadeStandGame
             bool validInput;
             sufficentBalance = false;
             while(!sufficentBalance){
-                Console.WriteLine($"\nYour current balance is ${balance}");
+                Console.WriteLine($"\nYour Balance: ${balance}");
                 Console.WriteLine($"\nHow many {item.name} would you like to buy? (Price for each: ${item.price})"); 
                 do
                 {

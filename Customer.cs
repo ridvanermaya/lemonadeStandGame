@@ -9,6 +9,13 @@ namespace lemonadeStandGame
         public bool likeLemonade;
 
         // constructor
+        public Customer(string name, double chanceToBuy, bool isThirsty, bool likeLemonade)
+        {
+            this.name = name;
+            this.chanceToBuy = chanceToBuy;
+            this.isThirsty = isThirsty;
+            this.likeLemonade = likeLemonade;
+        }
 
         // member methods
     }
