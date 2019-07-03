@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 
 namespace lemonadeStandGame
 {
@@ -25,6 +26,8 @@ namespace lemonadeStandGame
             player.SetName();
             Console.Clear();
             Console.WriteLine($"Welcome {player.name}");
+            //
+            //
             day.dailyweather.SetDailyWeather();
             day.dailyweather.DisplayWeather();
             player.inventory.DisplayInventory();
@@ -34,7 +37,32 @@ namespace lemonadeStandGame
             day.dailyweather.DisplayWeather();
             player.DisplayRecipe();
             player.inventory.DisplayInventory();
-            Console.WriteLine($"\nYour current balance is ${player.balance}");
+            player.RefillPitcher();
+            Console.WriteLine($"\nYour Balance: ${player.balance}");
+            foreach (var item in day.Customers)
+            {
+                Console.Clear();
+                if(item.chanceToBuy >= 0.5){
+                    if (player.inventory.paperCups.amount == 0 || player.inventory.iceCubes.amount < player.iceCubesPerCup){
+                    Console.WriteLine("SOLD OUT!");
+                    }
+                    else {
+                        player.inventory.CheckIfPitcherEmpty();
+                        if(player.inventory.isPitcherEmpty){
+                            player.RefillPitcher();
+                        }
+                        player.balance += player.pricePerCup / 100;
+                        player.inventory.pitcher.cupsInPitcher--;
+                        player.inventory.iceCubes.amount -= player.iceCubesPerCup;
+                        player.inventory.paperCups.amount--;
+                        player.DisplayBalance();
+                        player.inventory.DisplayInventory();
+                        item.BuyLemonade();
+                    }
+                }
+                Thread.Sleep(1500);
+            }
+            Console.WriteLine(player.balance);
         }
 
         public void Greeting()

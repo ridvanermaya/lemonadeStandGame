@@ -30,16 +30,27 @@ namespace lemonadeStandGame
             int randomNumberOne = rng.Next(0, names.Count);
             int randomNumberTwo = rng.Next(0, names.Count);
             double randomNumberThree = rng.NextDouble();
-            int randomNumberFour = rng.Next(0, 2);
-            int randomNumberFive = rng.Next(0, 2);
-            if (randomNumberFour == 1) {
+            int randomNumberFour = rng.Next(0, 11);
+            int randomNumberFive = rng.Next(0, 11);
+            if (dailyweather.dailyTemperature >= 76 && dailyweather.dailyTemperature <= 110 || dailyweather.dailyForecast == WeatherTypes.Sunny && dailyweather.dailyForecast == WeatherTypes.PartlySunny){
+                randomNumberFour += 2;
+                randomNumberFive += 2;
+            }
+            else if (dailyweather.dailyTemperature >= 61 && dailyweather.dailyTemperature <= 75 || dailyweather.dailyForecast == WeatherTypes.Hazy && dailyweather.dailyForecast == WeatherTypes.Cloudy){
+                randomNumberFour += 1;
+                randomNumberFive += 1;
+            }
+
+            if (randomNumberFour >= 5) {
                 isThirsty = true;
+                randomNumberThree += 0.1;
             } 
             else {
                 isThirsty = false;
             }
-            if (randomNumberFive == 1) {
+            if (randomNumberFive >= 5) {
                 likeLemonade = true;
+                randomNumberThree += 0.1;
             } 
             else {
                 likeLemonade = false;

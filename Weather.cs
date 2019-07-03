@@ -23,7 +23,7 @@ namespace lemonadeStandGame
 
         public void SetRandomTemperature()
         {
-            var randomNumber = rng.Next(50, 100);
+            var randomNumber = rng.Next(50, 110);
             dailyTemperature = randomNumber;
         }
 

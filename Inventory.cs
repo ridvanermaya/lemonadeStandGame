@@ -12,6 +12,8 @@ namespace lemonadeStandGame
         public Items cupsOfSugar;
         public Items iceCubes;
         public Pitcher pitcher;
+        public bool isPitcherEmpty;
+
 
         // constructor
         public Inventory()
@@ -52,6 +54,16 @@ namespace lemonadeStandGame
             Console.WriteLine($"[Lemons]: {lemons.amount}");
             Console.WriteLine($"[Cups of Sugar]: {cupsOfSugar.amount}");
             Console.WriteLine($"[Ice Cubes]: {iceCubes.amount}");
+        }
+
+        public void CheckIfPitcherEmpty()
+        {
+            if(pitcher.cupsInPitcher == 0){
+                isPitcherEmpty = true;
+            }
+            else {
+                isPitcherEmpty = false;
+            }
         }
     }
 }

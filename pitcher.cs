@@ -11,7 +11,7 @@ namespace lemonadeStandGame
         // constructor
         public Pitcher()
         {
-
+            cupsInPitcher = 12;
         }
         // member methods
     }

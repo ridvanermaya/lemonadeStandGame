@@ -10,10 +10,10 @@ namespace lemonadeStandGame
         public double balance;
         public Inventory inventory;
         public bool sufficentBalance;
-        int pricePerCup;
-        int lemonsPerPitcher;
-        int cupsOfSugarPerPitcher;
-        int iceCubesPerCup;
+        public double pricePerCup;
+        public int lemonsPerPitcher;
+        public int cupsOfSugarPerPitcher;
+        public int iceCubesPerCup;
 
         // constructor
         public Player(){
@@ -164,6 +164,22 @@ namespace lemonadeStandGame
             Console.WriteLine($"Lemons per pitcher: {lemonsPerPitcher}");
             Console.WriteLine($"Cups of Sugar per pitcher: {cupsOfSugarPerPitcher}");
             Console.WriteLine($"Ice per cup: {iceCubesPerCup}");
+        }
+
+        public void DisplayBalance()
+        {
+            Console.WriteLine($"Your Balance: ${balance}");
+        }
+
+        public void RefillPitcher()
+        {
+            if(inventory.lemons.amount < lemonsPerPitcher || inventory.cupsOfSugar.amount < cupsOfSugarPerPitcher){
+                Console.WriteLine("SOLD OUT");
+            }
+            else {
+                inventory.lemons.amount -= lemonsPerPitcher;
+                inventory.cupsOfSugar.amount -= cupsOfSugarPerPitcher;
+            }
         }
     }
 }
