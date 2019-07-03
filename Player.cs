@@ -121,8 +121,14 @@ namespace lemonadeStandGame
         public void BuyItems()
         {
             BuyItem(inventory.paperCups);
+            Console.Clear();
+            inventory.DisplayInventory();
             BuyItem(inventory.lemons);
+            Console.Clear();
+            inventory.DisplayInventory();
             BuyItem(inventory.cupsOfSugar);
+            Console.Clear();
+            inventory.DisplayInventory();
             BuyItem(inventory.iceCubes);
         }
 
@@ -179,6 +185,7 @@ namespace lemonadeStandGame
             else {
                 inventory.lemons.amount -= lemonsPerPitcher;
                 inventory.cupsOfSugar.amount -= cupsOfSugarPerPitcher;
+                inventory.pitcher.cupsInPitcher = 12;
             }
         }
     }
