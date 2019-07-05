@@ -7,12 +7,13 @@ namespace lemonadeStandGame
     {
         // member variables
         Player player;
-        Day day;
+        public Day day;
         Store store;
         int dayCounter;
         int daysToPlay;
         double dailyBalance;
         int soldLemonadeCount;
+        Random rng;
 
         // constructor
         public Game()
@@ -25,31 +26,14 @@ namespace lemonadeStandGame
         {
             Console.Clear();
             Greeting();
-            day = new Day();
             player = new Player();
             GameSettings();
+            day = new Day();
             Console.Clear();
 
             while (dayCounter < (daysToPlay + 1)){
-                soldLemonadeCount = 0;
-                dailyBalance = 0;
-                day.Customers.Clear();
-                day.dailyweather.SetDailyWeather();
-                day.dailyweather.DisplayWeather();
-                player.inventory.DisplayInventory();
-                player.BuyItems();
-                Console.Clear();
-                day.dailyweather.DisplayWeather();
-                player.CreateRecipe();
-                day.GenerateDailyCustomers();
-                player.RefillPitcher();
-                PlayEachCustomer();
-                player.inventory.iceCubes.amount = 0;
-                player.balance += dailyBalance;
+                OneDayGamePlay();
                 dayCounter++;
-                DisplayEndOfDayResults();
-                Thread.Sleep(10000);
-                Console.Clear();
             }
             double totalProfit = player.balance - 20;
             Console.WriteLine($"Your total balance is {totalProfit}");
@@ -106,20 +90,56 @@ namespace lemonadeStandGame
                         player.inventory.DisplayInventory();
                         item.BuyLemonade();
                         soldLemonadeCount++;
-                        Console.WriteLine($"\nDaily Earnings: {dailyBalance}");
+                        Console.WriteLine($"\nDaily Earnings: ${dailyBalance}");
                     }
                 }
                 Thread.Sleep(1000);
             }
         }
 
+        // displays end of day results
         public void DisplayEndOfDayResults()
         {
             Console.Clear();
             Console.WriteLine($"Remaining Ice {player.inventory.iceCubes.amount} melted.");
             player.inventory.DisplayInventory();
-            Console.WriteLine($"You sold {soldLemonadeCount} to {day.Customers.Count} potential customers.");
-            Console.WriteLine($"Today's Earning's: ${dailyBalance}");
+            Console.WriteLine($"\nYou sold {soldLemonadeCount} to {day.Customers.Count} potential customers.");
+            Console.WriteLine($"\nToday's Earning's: ${dailyBalance}");
+        }
+
+        // gameplay for one day
+        public void OneDayGamePlay()
+        {
+            soldLemonadeCount = 0;
+            dailyBalance = 0;
+            day.Customers.Clear();
+            day.dailyweather.SetDailyWeather();
+            day.dailyweather.DisplayWeather();
+            player.inventory.DisplayInventory();
+            player.BuyItems();
+            Console.Clear();
+            day.dailyweather.DisplayWeather();
+            player.CreateRecipe();
+            player.RefillPitcher();
+            GenerateDailyCustomers();
+            PlayEachCustomer();
+            player.inventory.iceCubes.amount = 0;
+            player.balance += dailyBalance;
+            DisplayEndOfDayResults();
+            Thread.Sleep(10000);
+            Console.Clear();
+        }
+
+        // generate daily customers
+        public void GenerateDailyCustomers()
+        {
+            int count = 0;
+            rng = new Random();
+            int randomNumber = rng.Next(80, 120);
+            while (count < randomNumber){
+                day.GenerateRandomCustomer(player.pricePerCup, player.cupsOfSugarPerPitcher, player.lemonsPerPitcher, player.iceCubesPerCup);
+                count++;
+            }
         }
     }
 }
