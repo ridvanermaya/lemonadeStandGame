@@ -43,41 +43,11 @@ namespace lemonadeStandGame
                 player.CreateRecipe();
                 day.GenerateDailyCustomers();
                 player.RefillPitcher();
-
-                foreach (var item in day.Customers){
-                    Console.Clear();
-                    day.dailyweather.DisplayWeather();
-                    if(item.chanceToBuy >= 0.5){
-                        if (player.inventory.paperCups.amount == 0 || player.inventory.iceCubes.amount < player.iceCubesPerCup){
-                            Console.WriteLine("SOLD OUT!");
-                        }
-                        else {
-                            player.inventory.CheckIfPitcherEmpty();
-                            if(player.inventory.isPitcherEmpty){
-                                player.RefillPitcher();
-                            }
-                            dailyBalance += player.pricePerCup / 100;
-                            player.inventory.pitcher.cupsInPitcher--;
-                            player.inventory.iceCubes.amount -= player.iceCubesPerCup;
-                            player.inventory.paperCups.amount--;
-                            player.inventory.DisplayInventory();
-                            item.BuyLemonade();
-                            soldLemonadeCount++;
-                            Console.WriteLine($"\nDaily Earnings: {dailyBalance}");
-                        }
-                    }
-                    Thread.Sleep(1000);
-                }
-                Console.Clear();
-                Console.WriteLine($"Remaining Ice {player.inventory.iceCubes.amount} melted.");
+                PlayEachCustomer();
                 player.inventory.iceCubes.amount = 0;
-                Thread.Sleep(2500);
-                Console.Clear();
-                player.inventory.DisplayInventory();
-                Console.WriteLine($"You sold {soldLemonadeCount} to {day.Customers.Count} potential customers.");
                 player.balance += dailyBalance;
-                Console.WriteLine($"Today's Earning's: ${dailyBalance}");
                 dayCounter++;
+                DisplayEndOfDayResults();
                 Thread.Sleep(10000);
                 Console.Clear();
             }
@@ -112,6 +82,44 @@ namespace lemonadeStandGame
                 } 
             } while (!isValid);
             daysToPlay = amount;
-        } 
+        }
+
+        // Goes through the list of customers to see if they buy or not
+        public void PlayEachCustomer()
+        {
+            foreach (var item in day.Customers){
+                Console.Clear();
+                day.dailyweather.DisplayWeather();
+                if(item.chanceToBuy >= 0.5){
+                    if (player.inventory.paperCups.amount == 0 || player.inventory.iceCubes.amount < player.iceCubesPerCup){
+                        Console.WriteLine("SOLD OUT!");
+                    }
+                    else {
+                        player.inventory.CheckIfPitcherEmpty();
+                        if(player.inventory.isPitcherEmpty){
+                            player.RefillPitcher();
+                        }
+                        dailyBalance += player.pricePerCup / 100;
+                        player.inventory.pitcher.cupsInPitcher--;
+                        player.inventory.iceCubes.amount -= player.iceCubesPerCup;
+                        player.inventory.paperCups.amount--;
+                        player.inventory.DisplayInventory();
+                        item.BuyLemonade();
+                        soldLemonadeCount++;
+                        Console.WriteLine($"\nDaily Earnings: {dailyBalance}");
+                    }
+                }
+                Thread.Sleep(1000);
+            }
+        }
+
+        public void DisplayEndOfDayResults()
+        {
+            Console.Clear();
+            Console.WriteLine($"Remaining Ice {player.inventory.iceCubes.amount} melted.");
+            player.inventory.DisplayInventory();
+            Console.WriteLine($"You sold {soldLemonadeCount} to {day.Customers.Count} potential customers.");
+            Console.WriteLine($"Today's Earning's: ${dailyBalance}");
+        }
     }
 }
