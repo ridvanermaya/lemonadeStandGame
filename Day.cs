@@ -22,12 +22,14 @@ namespace lemonadeStandGame
             AddNames();
         }
         // member methods
+        // this method generates random customer by ...
         public void GenerateRandomCustomer(double pricePerCup, int amountOfSugar, int amountOfLemon, int amountOfIce) 
         {
             bool isThirsty;
             bool likeLemonade;
             bool likeSugar;
             bool likeLemon;
+            bool caresAboutMoney;
             int randomNumberForName = rng.Next(0, names.Count);
             double randomNumberForChanceToBuy = rng.NextDouble();
             int randomNumberForThirstLevel = rng.Next(0, 11);
@@ -35,44 +37,58 @@ namespace lemonadeStandGame
             int randomNumberForPriceOfLemonade = rng.Next(0, 11);
             int randomNumberForLikeLemon = rng.Next(0, 2);
             int randomNumberForLikeSugar = rng.Next(0, 2);
+            int randomNumberForCareMoney = rng.Next(0, 2);
 
-            if (dailyweather.dailyTemperature >= 76 && dailyweather.dailyTemperature <= 110 || dailyweather.dailyForecast == WeatherTypes.Sunny && dailyweather.dailyForecast == WeatherTypes.PartlySunny){
+            if (dailyweather.dailyTemperature >= 90 && dailyweather.dailyTemperature <= 110 || dailyweather.dailyForecast == WeatherTypes.Sunny && dailyweather.dailyForecast == WeatherTypes.PartlySunny){
+                randomNumberForThirstLevel += 3;
+                randomNumberForLikeLemonade += 3;
+            }
+            else if (dailyweather.dailyTemperature >= 70 && dailyweather.dailyTemperature <= 89 || dailyweather.dailyForecast == WeatherTypes.Hazy && dailyweather.dailyForecast == WeatherTypes.Cloudy){
                 randomNumberForThirstLevel += 2;
                 randomNumberForLikeLemonade += 2;
-            }
-            else if (dailyweather.dailyTemperature >= 61 && dailyweather.dailyTemperature <= 75 || dailyweather.dailyForecast == WeatherTypes.Hazy && dailyweather.dailyForecast == WeatherTypes.Cloudy){
-                randomNumberForThirstLevel += 1;
-                randomNumberForLikeLemonade += 1;
             }
 
             if (randomNumberForThirstLevel >= 5) {
                 isThirsty = true;
-                randomNumberForChanceToBuy += 0.05;
+                randomNumberForChanceToBuy += 0.1;
             } 
             else {
                 isThirsty = false;
+                randomNumberForChanceToBuy -= 0.1;
             }
 
             if (randomNumberForLikeLemonade >= 5) {
                 likeLemonade = true;
-                randomNumberForChanceToBuy += 0.05;
+                randomNumberForChanceToBuy += 0.1;
             } 
             else {
                 likeLemonade = false;
-                randomNumberForChanceToBuy -= 0.05;
-            }
-
-            if (pricePerCup > 30 && pricePerCup <= 40) {
                 randomNumberForChanceToBuy -= 0.1;
             }
-            else if (pricePerCup > 40) {
-                randomNumberForChanceToBuy -= 0.2;
+
+            if (randomNumberForCareMoney == 1) {
+                caresAboutMoney = true;
             }
-            else if (pricePerCup < 20 && pricePerCup >= 10) {
-                randomNumberForChanceToBuy += 0.2;
+            else {
+                caresAboutMoney = false;
             }
-            else if (pricePerCup < 10) {
-                randomNumberForChanceToBuy += 0.3;
+            
+            if (caresAboutMoney) {
+                if (pricePerCup > 30 && pricePerCup <= 40) {
+                    randomNumberForChanceToBuy -= 0.1;
+                }
+                else if (pricePerCup > 40 && pricePerCup <= 50) {
+                    randomNumberForChanceToBuy -= 0.2;
+                }
+                else if (pricePerCup > 50) {
+                    randomNumberForChanceToBuy -= 0.3;
+                }
+                else if (pricePerCup < 20 && pricePerCup >= 10) {
+                    randomNumberForChanceToBuy += 0.2;
+                }
+                else if (pricePerCup < 10) {
+                    randomNumberForChanceToBuy += 0.3;
+                }
             }
 
             if (randomNumberForLikeLemon == 1) {
@@ -124,11 +140,6 @@ namespace lemonadeStandGame
 
             customer = new Customer(names[randomNumberForName], randomNumberForChanceToBuy, isThirsty, likeLemonade);
             Customers.Add(customer);
-        }
-
-        public void GenerateDailyCustomers() 
-        {
-            
         }
 
         public void AddNames()

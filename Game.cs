@@ -30,13 +30,28 @@ namespace lemonadeStandGame
             GameSettings();
             day = new Day();
             Console.Clear();
+            dayCounter = 0;
 
-            while (dayCounter < (daysToPlay + 1)){
+            while (dayCounter < daysToPlay){
                 OneDayGamePlay();
                 dayCounter++;
             }
             double totalProfit = player.balance - 20;
-            Console.WriteLine($"Your total balance is {totalProfit}");
+
+            if (totalProfit < 0) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Your total profit is ${totalProfit} and you lost money!");
+            }
+            else if (totalProfit == 0) {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"Your total profit is ${totalProfit} and neither you earned nor lost money!");
+            }
+            else {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Congratulations your total profit is ${totalProfit}.");
+            }
+            Console.ResetColor();
+            EndGameScreen();
         }
 
         public void Greeting()
@@ -51,21 +66,12 @@ namespace lemonadeStandGame
         public void GameSettings()
         {
             string userInput;
-            bool isValid;
-            int amount;
             player.SetName();
             Console.Clear();
-            Console.WriteLine($"Welcome {player.name}");
+            Console.WriteLine($"Welcome to {player.name}'s Lemonade Stand");
             Console.WriteLine("How many days would you like to play?");
-            do
-            {
-                userInput = Console.ReadLine();
-                isValid = int.TryParse(userInput, out amount);
-                if (!isValid){
-                    Console.WriteLine("Please enter a number.. For how many days would you like to play?");
-                } 
-            } while (!isValid);
-            daysToPlay = amount;
+            userInput = Console.ReadLine();
+            daysToPlay = ValidateUserInputForIntegers(userInput, "How many days would you like to play?");
         }
 
         // Goes through the list of customers to see if they buy or not
@@ -93,7 +99,7 @@ namespace lemonadeStandGame
                         Console.WriteLine($"\nDaily Earnings: ${dailyBalance}");
                     }
                 }
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
             }
         }
 
@@ -135,11 +141,43 @@ namespace lemonadeStandGame
         {
             int count = 0;
             rng = new Random();
-            int randomNumber = rng.Next(80, 120);
-            while (count < randomNumber){
-                day.GenerateRandomCustomer(player.pricePerCup, player.cupsOfSugarPerPitcher, player.lemonsPerPitcher, player.iceCubesPerCup);
-                count++;
+            int randomNumber;
+            if (day.dailyweather.dailyTemperature > 80) {
+                randomNumber = rng.Next(101, 125);
+                while (count < randomNumber) {
+                    day.GenerateRandomCustomer(player.pricePerCup, player.cupsOfSugarPerPitcher, player.lemonsPerPitcher, player.iceCubesPerCup);
+                    count++;
+                }
             }
+            else {
+                rng = new Random();
+                randomNumber = rng.Next(75, 101);
+                while (count < randomNumber){
+                    day.GenerateRandomCustomer(player.pricePerCup, player.cupsOfSugarPerPitcher, player.lemonsPerPitcher, player.iceCubesPerCup);
+                    count++;
+                }
+            }
+        }
+
+        public void EndGameScreen() 
+        {
+            Console.WriteLine("GAME OVER");
+        }
+
+        // checks for user input if the user input is valid returns the valid value
+        public int ValidateUserInputForIntegers(string userInput, string message) 
+        {
+            bool isValid;
+            int amount;
+            do {
+                isValid = int.TryParse(userInput, out amount);
+                if (!isValid) {
+                    Console.WriteLine("\nYou didn't enter a number.. Please enter a number..");
+                    Console.WriteLine(message);
+                    userInput = Console.ReadLine();
+                }
+            } while (!isValid);
+            return amount;
         }
     }
 }
