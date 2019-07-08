@@ -22,6 +22,7 @@ namespace lemonadeStandGame
         }
 
         // member methods
+        // preparing new pitcher
         public void PreparePitcher()
         {
             if (inventory.cupsOfSugar.amount >= cupsOfSugarPerPitcher && 
@@ -35,12 +36,14 @@ namespace lemonadeStandGame
             }
         }
 
+        // setting player name
         public void SetName()
         {
             Console.Write("\nPlease enter player name: ");
             name = Console.ReadLine();
         }
 
+        // setting price per cup
         public void SetPricePerCup()
         {
             string userInput;
@@ -49,6 +52,7 @@ namespace lemonadeStandGame
             pricePerCup = ValidateUserInputForIntegers(userInput, "Price per Cup [cents]");
         }
 
+        // setting amount of lemons per pitcher
         public void SetLemonsPerPitcher()
         {
             string userInput;
@@ -57,6 +61,7 @@ namespace lemonadeStandGame
             lemonsPerPitcher = ValidateUserInputForIntegers(userInput, "Amount of Lemons per Pitcher?");
         }
 
+        // setting cups of suger per pitcher
         public void SetCupsOfSugarPerPitcher() 
         {
             string userInput;
@@ -65,6 +70,7 @@ namespace lemonadeStandGame
             cupsOfSugarPerPitcher = ValidateUserInputForIntegers(userInput, "Cups of Sugar per Pitcher?");
         }
 
+        // setting amount of ice cube per cup
         public void SetIceCubesPerCup()
         {
             string userInput;
@@ -73,6 +79,7 @@ namespace lemonadeStandGame
             iceCubesPerCup = ValidateUserInputForIntegers(userInput, "Amount of Ice Cubes per Cup?");
         }
         
+        // player creates recipe
         public void CreateRecipe()
         {
             Console.WriteLine("\nCreating Recipe for the day!");
@@ -82,6 +89,7 @@ namespace lemonadeStandGame
             SetIceCubesPerCup();
         }
 
+        // buying items for the lemonade stand
         public void BuyItems()
         {
             BuyItem(inventory.paperCups);
@@ -96,6 +104,7 @@ namespace lemonadeStandGame
             BuyItem(inventory.iceCubes);
         }
 
+        // buying item for lemonade stand
         public void BuyItem(Items item)
         {
             string userInput;
@@ -120,6 +129,7 @@ namespace lemonadeStandGame
             }
         }
 
+        // displays daily recipe
         public void DisplayRecipe()
         {
             Console.WriteLine("\nYour Recipe");
@@ -129,11 +139,13 @@ namespace lemonadeStandGame
             Console.WriteLine($"Ice per cup: {iceCubesPerCup}");
         }
 
+        // displays player's money
         public void DisplayBalance()
         {
             Console.WriteLine($"Your Balance: ${balance}");
         }
 
+        // refills pitcher when cupsInPicther drops to '0'
         public void RefillPitcher()
         {
             if(inventory.lemons.amount < lemonsPerPitcher || inventory.cupsOfSugar.amount < cupsOfSugarPerPitcher){

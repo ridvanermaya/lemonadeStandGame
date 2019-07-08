@@ -7,7 +7,7 @@ namespace lemonadeStandGame
     {
         // member variables
         Player player;
-        public Day day;
+        Day day;
         Store store;
         int dayCounter;
         int daysToPlay;
@@ -22,38 +22,27 @@ namespace lemonadeStandGame
         }
 
         // member methods
+        // playing game from the beginning to the end
         public void StartGame()
         {
+            player = new Player();
+            day = new Day();
+            dayCounter = 0;
             Console.Clear();
             Greeting();
-            player = new Player();
             GameSettings();
-            day = new Day();
             Console.Clear();
-            dayCounter = 0;
-
+            
             while (dayCounter < daysToPlay){
                 OneDayGamePlay();
                 dayCounter++;
             }
-            double totalProfit = player.balance - 20;
-
-            if (totalProfit < 0) {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Your total profit is ${totalProfit} and you lost money!");
-            }
-            else if (totalProfit == 0) {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"Your total profit is ${totalProfit} and neither you earned nor lost money!");
-            }
-            else {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Congratulations your total profit is ${totalProfit}.");
-            }
-            Console.ResetColor();
+            
+            CheckForTotalProfit();
             EndGameScreen();
         }
-
+        
+        // greets the player and gives basic information about the game
         public void Greeting()
         {
             Console.WriteLine("Welcome to Lemonade Stand Game");
@@ -63,6 +52,7 @@ namespace lemonadeStandGame
             "\nand purchasing supplies. Buy your ingredients, set your recipe, and start selling!");
         }
 
+        // asks users for days to play
         public void GameSettings()
         {
             string userInput;
@@ -74,7 +64,7 @@ namespace lemonadeStandGame
             daysToPlay = ValidateUserInputForIntegers(userInput, "How many days would you like to play?");
         }
 
-        // Goes through the list of customers to see if they buy or not
+        // goes through the list of customers to see if they buy or not
         public void PlayEachCustomer()
         {
             foreach (var item in day.Customers){
@@ -136,7 +126,7 @@ namespace lemonadeStandGame
             Console.Clear();
         }
 
-        // generate daily customers
+        // generates daily customers depending on the temperature
         public void GenerateDailyCustomers()
         {
             int count = 0;
@@ -178,6 +168,27 @@ namespace lemonadeStandGame
                 }
             } while (!isValid);
             return amount;
+        }
+
+        // checks the total profit for the end of the game 
+        public void CheckForTotalProfit() {
+            double totalProfit = player.balance - 20;
+
+            if (totalProfit < 0) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Your total profit is ${totalProfit} and you lost money!");
+                Console.ResetColor();
+            }
+            else if (totalProfit == 0) {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"Your total profit is ${totalProfit} and neither you earned nor lost money!");
+                Console.ResetColor();
+            }
+            else {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Congratulations your total profit is ${totalProfit}.");
+                Console.ResetColor();
+            }
         }
     }
 }

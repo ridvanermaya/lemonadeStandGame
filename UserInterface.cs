@@ -1,6 +1,6 @@
 namespace lemonadeStandGame
 {
-    public class UserInterface
+    public static class UserInterface
     {
         // member variables
 
