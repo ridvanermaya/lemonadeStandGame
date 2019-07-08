@@ -6,7 +6,7 @@ namespace lemonadeStandGame
     public static class UserInterface
     {
         // member variables
-        
+
         // constructor
 
         // member methods
@@ -92,11 +92,13 @@ namespace lemonadeStandGame
                     Console.WriteLine("\nPurchase successfull!");
                     sufficentBalance = true;
                     item.amount += amount;
+                    balance = Math.Round(balance, 2);
                     return balance;
                 }
                 else {
                     Console.WriteLine("\nPurchase unsuccessfull. Reason: Insufficient funds!");
                     sufficentBalance = false;
+                    balance = Math.Round(balance, 2);
                     return balance;
                 }
             }
@@ -174,12 +176,6 @@ namespace lemonadeStandGame
             Console.Clear();
             Console.WriteLine("Game is starting...");
             Console.WriteLine("-------- 3 --------");
-        }
-
-        public static void DisplayActualWeather(Weather weather)
-        {
-            Console.WriteLine("Today's Weather");
-            Console.WriteLine($"Forecast: {weather.dailyForecast}");
         }
     }
 }

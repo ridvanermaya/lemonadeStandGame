@@ -51,7 +51,7 @@ namespace lemonadeStandGame
                 day.dailyweather.DisplayActualWeather();
                 if(item.chanceToBuy >= 0.5){
                     if (player.inventory.paperCups.amount == 0 || player.inventory.iceCubes.amount < player.iceCubesPerCup){
-                        Console.WriteLine("SOLD OUT!");
+                        Console.WriteLine("\nSOLD OUT!");
                     }
                     else {
                         player.inventory.CheckIfPitcherEmpty();
@@ -59,6 +59,7 @@ namespace lemonadeStandGame
                             player.RefillPitcher();
                         }
                         dailyBalance += player.pricePerCup / 100;
+                        dailyBalance = Math.Round(dailyBalance, 2);
                         player.inventory.pitcher.cupsInPitcher--;
                         player.inventory.iceCubes.amount -= player.iceCubesPerCup;
                         player.inventory.paperCups.amount--;
@@ -102,6 +103,7 @@ namespace lemonadeStandGame
             PlayEachCustomer();
             player.inventory.iceCubes.amount = 0;
             player.balance += dailyBalance;
+            player.balance = Math.Round(player.balance, 2);
             DisplayEndOfDayResults();
             Console.WriteLine("Press any button to continue..");
             Console.ReadKey();
@@ -134,6 +136,7 @@ namespace lemonadeStandGame
         // checks the total profit for the end of the game 
         public void CheckForTotalProfit() {
             double totalProfit = player.balance - 20;
+            totalProfit = Math.Round(totalProfit, 2);
 
             if (totalProfit < 0) {
                 Console.ForegroundColor = ConsoleColor.Red;
