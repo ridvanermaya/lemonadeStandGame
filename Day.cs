@@ -31,7 +31,7 @@ namespace lemonadeStandGame
             bool likeLemon;
             bool caresAboutMoney;
             int randomNumberForName = rng.Next(0, names.Count);
-            double randomNumberForChanceToBuy = rng.NextDouble();
+            double randomNumberForChanceToBuy = 0.4;
             int randomNumberForThirstLevel = rng.Next(0, 11);
             int randomNumberForLikeLemonade = rng.Next(0, 11);
             int randomNumberForPriceOfLemonade = rng.Next(0, 11);
@@ -42,10 +42,17 @@ namespace lemonadeStandGame
             if (dailyweather.dailyTemperature >= 90 && dailyweather.dailyTemperature <= 110 || dailyweather.dailyForecast == WeatherTypes.Sunny && dailyweather.dailyForecast == WeatherTypes.PartlySunny){
                 randomNumberForThirstLevel += 3;
                 randomNumberForLikeLemonade += 3;
+                randomNumberForChanceToBuy += 0.1;
             }
             else if (dailyweather.dailyTemperature >= 70 && dailyweather.dailyTemperature <= 89 || dailyweather.dailyForecast == WeatherTypes.Hazy && dailyweather.dailyForecast == WeatherTypes.Cloudy){
                 randomNumberForThirstLevel += 2;
                 randomNumberForLikeLemonade += 2;
+                randomNumberForChanceToBuy += 0.1;
+            }
+            else if (dailyweather.dailyTemperature < 70 && dailyweather.dailyTemperature >= 50 || dailyweather.dailyForecast == WeatherTypes.Thunderstorm && dailyweather.dailyForecast == WeatherTypes.Overcast) {
+                randomNumberForThirstLevel -= 1;
+                randomNumberForLikeLemonade -= 1;
+                randomNumberForChanceToBuy -= 0.1;
             }
 
             if (randomNumberForThirstLevel >= 5) {
@@ -84,10 +91,10 @@ namespace lemonadeStandGame
                     randomNumberForChanceToBuy -= 0.3;
                 }
                 else if (pricePerCup < 20 && pricePerCup >= 10) {
-                    randomNumberForChanceToBuy += 0.2;
+                    randomNumberForChanceToBuy += 0.1;
                 }
                 else if (pricePerCup < 10) {
-                    randomNumberForChanceToBuy += 0.3;
+                    randomNumberForChanceToBuy += 0.1;
                 }
             }
 
@@ -132,7 +139,7 @@ namespace lemonadeStandGame
             }
 
             if (dailyweather.dailyTemperature >= 80 && amountOfIce < 5) {
-                randomNumberForChanceToBuy -= 0.1;
+                randomNumberForChanceToBuy -= 0.2;
             }
             else if (dailyweather.dailyTemperature >= 80 && amountOfIce >=5) {
                 randomNumberForChanceToBuy += 0.1;

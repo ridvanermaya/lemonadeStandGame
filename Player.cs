@@ -47,25 +47,31 @@ namespace lemonadeStandGame
         public void CreateRecipe()
         {
             Console.WriteLine("\nCreating Recipe for the day!");
-            UserInterface.SetPricePerCup(pricePerCup);
-            UserInterface.SetLemonsPerPitcher(lemonsPerPitcher);
-            UserInterface.SetCupsOfSugarPerPitcher(cupsOfSugarPerPitcher);
-            UserInterface.SetIceCubesPerCup(iceCubesPerCup);
+            pricePerCup = UserInterface.SetPricePerCup(pricePerCup);
+            lemonsPerPitcher = UserInterface.SetLemonsPerPitcher(lemonsPerPitcher);
+            cupsOfSugarPerPitcher = UserInterface.SetCupsOfSugarPerPitcher(cupsOfSugarPerPitcher);
+            iceCubesPerCup = UserInterface.SetIceCubesPerCup(iceCubesPerCup);
         }
 
         // buying items for the lemonade stand
-        public void BuyItems()
+        public void BuyItems(Weather weather)
         {
-            UserInterface.BuyItem(inventory.paperCups, balance, sufficentBalance);
             Console.Clear();
+            UserInterface.DisplayWeather(weather);
             UserInterface.DisplayInventory(inventory);
-            UserInterface.BuyItem(inventory.lemons, balance, sufficentBalance);
+            balance = UserInterface.BuyItem(inventory.paperCups, balance, sufficentBalance);
             Console.Clear();
+            UserInterface.DisplayWeather(weather);
             UserInterface.DisplayInventory(inventory);
-            UserInterface.BuyItem(inventory.cupsOfSugar, balance, sufficentBalance);
+            balance = UserInterface.BuyItem(inventory.lemons, balance, sufficentBalance);
             Console.Clear();
+            UserInterface.DisplayWeather(weather);
             UserInterface.DisplayInventory(inventory);
-            UserInterface.BuyItem(inventory.iceCubes, balance, sufficentBalance);
+            balance = UserInterface.BuyItem(inventory.cupsOfSugar, balance, sufficentBalance);
+            Console.Clear();
+            UserInterface.DisplayWeather(weather);
+            UserInterface.DisplayInventory(inventory);
+            balance = UserInterface.BuyItem(inventory.iceCubes, balance, sufficentBalance);
         }
 
         // displays player's money
@@ -85,22 +91,6 @@ namespace lemonadeStandGame
                 inventory.cupsOfSugar.amount -= cupsOfSugarPerPitcher;
                 inventory.pitcher.cupsInPitcher = 12;
             }
-        }
-
-        // checks for user input if the user input is valid returns the valid value
-        public int ValidateUserInputForIntegers(string userInput, string message) 
-        {
-            bool isValid;
-            int amount;
-            do {
-                isValid = int.TryParse(userInput, out amount);
-                if (!isValid) {
-                    Console.WriteLine("\nYou didn't enter a number.. Please enter a number..");
-                    Console.WriteLine(message);
-                    userInput = Console.ReadLine();
-                }
-            } while (!isValid);
-            return amount;
         }
     }
 }

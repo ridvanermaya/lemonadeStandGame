@@ -1,17 +1,18 @@
 using System;
+using System.Threading;
 
 namespace lemonadeStandGame
 {
     public static class UserInterface
     {
         // member variables
-
+        
         // constructor
 
         // member methods
         public static void DisplayWeather(Weather weather)
         {
-            Console.WriteLine("\nToday's Atmosphere Condition");
+            Console.WriteLine("\nToday's Possible Weather");
             Console.WriteLine($"Forecast: {weather.dailyForecast}");
             Console.WriteLine($"Temperature: {weather.dailyTemperature}");
         }
@@ -75,7 +76,7 @@ namespace lemonadeStandGame
         }
 
         // buying item for lemonade stand
-        public static void BuyItem(Items item, double balance, bool sufficentBalance)
+        public static double BuyItem(Items item, double balance, bool sufficentBalance)
         {
             string userInput;
             int amount;
@@ -91,50 +92,59 @@ namespace lemonadeStandGame
                     Console.WriteLine("\nPurchase successfull!");
                     sufficentBalance = true;
                     item.amount += amount;
+                    return balance;
                 }
                 else {
                     Console.WriteLine("\nPurchase unsuccessfull. Reason: Insufficient funds!");
                     sufficentBalance = false;
+                    return balance;
                 }
             }
+            return balance;
         }
 
         // setting price per cup
-        public static void SetPricePerCup(double pricePerCup)
+        public static double SetPricePerCup(double pricePerCup)
         {
             string userInput;
             Console.WriteLine("\nPrice per Cup? [cents]");
             userInput = Console.ReadLine();
-            pricePerCup = ValidateUserInputForIntegers(userInput, "Price per Cup [cents]");
+            return pricePerCup = ValidateUserInputForIntegers(userInput, "Price per Cup [cents]");
         }
 
         // setting amount of lemons per pitcher
-        public static void SetLemonsPerPitcher(double lemonsPerPitcher)
+        public static int SetLemonsPerPitcher(int lemonsPerPitcher)
         {
             string userInput;
             Console.WriteLine("\nAmount of Lemons per Pitcher?");
             userInput = Console.ReadLine();
-            lemonsPerPitcher = ValidateUserInputForIntegers(userInput, "Amount of Lemons per Pitcher?");
+            return lemonsPerPitcher = ValidateUserInputForIntegers(userInput, "Amount of Lemons per Pitcher?");
         }
 
         // setting cups of suger per pitcher
-        public static void SetCupsOfSugarPerPitcher(double cupsOfSugarPerPitcher) 
+        public static int SetCupsOfSugarPerPitcher(int cupsOfSugarPerPitcher) 
         {
             string userInput;
             Console.WriteLine("\nCups of Sugar per Pitcher?");
             userInput = Console.ReadLine();
-            cupsOfSugarPerPitcher = ValidateUserInputForIntegers(userInput, "Cups of Sugar per Pitcher?");
+            return cupsOfSugarPerPitcher = ValidateUserInputForIntegers(userInput, "Cups of Sugar per Pitcher?");
         }
 
         // setting amount of ice cube per cup
-        public static void SetIceCubesPerCup(double iceCubesPerCup)
+        public static int SetIceCubesPerCup(int iceCubesPerCup)
         {
             string userInput;
             Console.WriteLine("\nAmount of Ice Cubes per Cup?");
             userInput = Console.ReadLine();
-            iceCubesPerCup = ValidateUserInputForIntegers(userInput, "Amount of Ice Cubes per Cup?");
+            return iceCubesPerCup = ValidateUserInputForIntegers(userInput, "Amount of Ice Cubes per Cup?");
         }
 
+        // SOLID DESIGN PRINCIPLE USED
+        // In my design, I need to check if the user is inputing an integer in many places.
+        // So I wrote a method that trys to convert the user input to integer
+        // If the input cannot be converted to integer then the user is reprompted to enter a number again.
+        // This method can be used in many places for user Input and as second parameter the developer can
+        // put any message for the user to see
         // checks for user input if the user input is valid returns the valid value
         public static int ValidateUserInputForIntegers(string userInput, string message) 
         {
@@ -149,6 +159,27 @@ namespace lemonadeStandGame
                 }
             } while (!isValid);
             return amount;
+        }
+
+        public static void CountToThree()
+        {
+            Console.Clear();
+            Console.WriteLine("Game is starting...");
+            Console.WriteLine("-------- 1 --------");
+            Thread.Sleep(1000);
+            Console.Clear();
+            Console.WriteLine("Game is starting...");
+            Console.WriteLine("-------- 2 --------");
+            Thread.Sleep(1000);
+            Console.Clear();
+            Console.WriteLine("Game is starting...");
+            Console.WriteLine("-------- 3 --------");
+        }
+
+        public static void DisplayActualWeather(Weather weather)
+        {
+            Console.WriteLine("Today's Weather");
+            Console.WriteLine($"Forecast: {weather.dailyForecast}");
         }
     }
 }

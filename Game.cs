@@ -48,7 +48,7 @@ namespace lemonadeStandGame
             foreach (var item in day.Customers){
                 Console.Clear();
                 UserInterface.DisplayCurrentDay(dayCounter);
-                UserInterface.DisplayWeather(day.dailyweather);
+                day.dailyweather.DisplayActualWeather();
                 if(item.chanceToBuy >= 0.5){
                     if (player.inventory.paperCups.amount == 0 || player.inventory.iceCubes.amount < player.iceCubesPerCup){
                         Console.WriteLine("SOLD OUT!");
@@ -90,17 +90,21 @@ namespace lemonadeStandGame
             day.dailyweather.SetDailyWeather();
             UserInterface.DisplayWeather(day.dailyweather);
             UserInterface.DisplayInventory(player.inventory);
-            player.BuyItems();
+            player.BuyItems(day.dailyweather);
             Console.Clear();
             UserInterface.DisplayWeather(day.dailyweather);
+            day.dailyweather.SetActualWeather();
             player.CreateRecipe();
             player.RefillPitcher();
+            UserInterface.CountToThree();
+            day.dailyweather.DisplayActualWeather();
             GenerateDailyCustomers();
             PlayEachCustomer();
             player.inventory.iceCubes.amount = 0;
             player.balance += dailyBalance;
             DisplayEndOfDayResults();
-            Thread.Sleep(10000);
+            Console.WriteLine("Press any button to continue..");
+            Console.ReadKey();
             Console.Clear();
         }
 

@@ -47,6 +47,9 @@ namespace lemonadeStandGame
             iceCubes.price = 0.0078;
         }
 
+        // SOLID DESIGN PRINCIPLE USED
+        // I wrote a method here to check if the pitcher is empty or not
+        // So during the gameplay I can eaisly call this method to check if the pitcher is empty or not
         public void CheckIfPitcherEmpty()
         {
             if(pitcher.cupsInPitcher == 0){

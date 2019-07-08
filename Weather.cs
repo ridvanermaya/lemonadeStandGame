@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace lemonadeStandGame
 {
@@ -32,6 +34,19 @@ namespace lemonadeStandGame
         {
             SetRandomTemperature();
             SetRandomWeather();
+        }
+
+        public void SetActualWeather()
+        {
+            var randomNumber = rng.Next(-5, 11);
+            dailyTemperature += randomNumber;
+        }
+
+        public void DisplayActualWeather()
+        {
+            Console.WriteLine("\nToday's Weather");
+            Console.WriteLine($"Forecast: {dailyForecast}");
+            Console.WriteLine($"Temperature {dailyTemperature}");
         }
     }
 }
