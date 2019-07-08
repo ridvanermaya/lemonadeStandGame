@@ -21,6 +21,7 @@ namespace lemonadeStandGame
             dailyForecast = (WeatherTypes)randomNumber;
         }
 
+        // solid principle used
         public void SetRandomTemperature()
         {
             var randomNumber = rng.Next(50, 110);
@@ -31,13 +32,6 @@ namespace lemonadeStandGame
         {
             SetRandomTemperature();
             SetRandomWeather();
-        }
-
-        public void DisplayWeather()
-        {
-            Console.WriteLine("\nToday's Atmosphere Condition");
-            Console.WriteLine($"Forecast: {dailyForecast}");
-            Console.WriteLine($"Temperature: {dailyTemperature}");
         }
     }
 }

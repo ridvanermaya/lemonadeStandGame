@@ -47,15 +47,6 @@ namespace lemonadeStandGame
             iceCubes.price = 0.0078;
         }
 
-        public void DisplayInventory()
-        {
-            Console.WriteLine("\nYour Inventory");
-            Console.WriteLine($"[Paper Cups]: {paperCups.amount}");
-            Console.WriteLine($"[Lemons]: {lemons.amount}");
-            Console.WriteLine($"[Cups of Sugar]: {cupsOfSugar.amount}");
-            Console.WriteLine($"[Ice Cubes]: {iceCubes.amount}");
-        }
-
         public void CheckIfPitcherEmpty()
         {
             if(pitcher.cupsInPitcher == 0){

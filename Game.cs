@@ -27,41 +27,19 @@ namespace lemonadeStandGame
         {
             player = new Player();
             day = new Day();
-            dayCounter = 0;
+            dayCounter = 1;
             Console.Clear();
-            Greeting();
-            GameSettings();
+            UserInterface.Greeting();
+            daysToPlay = UserInterface.GameSettings(player);
             Console.Clear();
             
-            while (dayCounter < daysToPlay){
+            while (dayCounter < (daysToPlay + 1)){
                 OneDayGamePlay();
                 dayCounter++;
             }
             
             CheckForTotalProfit();
-            EndGameScreen();
-        }
-        
-        // greets the player and gives basic information about the game
-        public void Greeting()
-        {
-            Console.WriteLine("Welcome to Lemonade Stand Game");
-            Console.WriteLine("\nYou will have certain amount of days to make as much money as possible," +
-            "\nand you've decided to open a lemonade stand! You'll have complete control" +
-            "\nover your business, including pricing, quality control, inventory control," +
-            "\nand purchasing supplies. Buy your ingredients, set your recipe, and start selling!");
-        }
-
-        // asks users for days to play
-        public void GameSettings()
-        {
-            string userInput;
-            player.SetName();
-            Console.Clear();
-            Console.WriteLine($"Welcome to {player.name}'s Lemonade Stand");
-            Console.WriteLine("How many days would you like to play?");
-            userInput = Console.ReadLine();
-            daysToPlay = ValidateUserInputForIntegers(userInput, "How many days would you like to play?");
+            UserInterface.EndGameScreen();
         }
 
         // goes through the list of customers to see if they buy or not
@@ -69,7 +47,8 @@ namespace lemonadeStandGame
         {
             foreach (var item in day.Customers){
                 Console.Clear();
-                day.dailyweather.DisplayWeather();
+                UserInterface.DisplayCurrentDay(dayCounter);
+                UserInterface.DisplayWeather(day.dailyweather);
                 if(item.chanceToBuy >= 0.5){
                     if (player.inventory.paperCups.amount == 0 || player.inventory.iceCubes.amount < player.iceCubesPerCup){
                         Console.WriteLine("SOLD OUT!");
@@ -83,7 +62,6 @@ namespace lemonadeStandGame
                         player.inventory.pitcher.cupsInPitcher--;
                         player.inventory.iceCubes.amount -= player.iceCubesPerCup;
                         player.inventory.paperCups.amount--;
-                        player.inventory.DisplayInventory();
                         item.BuyLemonade();
                         soldLemonadeCount++;
                         Console.WriteLine($"\nDaily Earnings: ${dailyBalance}");
@@ -98,7 +76,7 @@ namespace lemonadeStandGame
         {
             Console.Clear();
             Console.WriteLine($"Remaining Ice {player.inventory.iceCubes.amount} melted.");
-            player.inventory.DisplayInventory();
+            UserInterface.DisplayInventory(player.inventory);
             Console.WriteLine($"\nYou sold {soldLemonadeCount} to {day.Customers.Count} potential customers.");
             Console.WriteLine($"\nToday's Earning's: ${dailyBalance}");
         }
@@ -110,11 +88,11 @@ namespace lemonadeStandGame
             dailyBalance = 0;
             day.Customers.Clear();
             day.dailyweather.SetDailyWeather();
-            day.dailyweather.DisplayWeather();
-            player.inventory.DisplayInventory();
+            UserInterface.DisplayWeather(day.dailyweather);
+            UserInterface.DisplayInventory(player.inventory);
             player.BuyItems();
             Console.Clear();
-            day.dailyweather.DisplayWeather();
+            UserInterface.DisplayWeather(day.dailyweather);
             player.CreateRecipe();
             player.RefillPitcher();
             GenerateDailyCustomers();
@@ -147,27 +125,6 @@ namespace lemonadeStandGame
                     count++;
                 }
             }
-        }
-
-        public void EndGameScreen() 
-        {
-            Console.WriteLine("GAME OVER");
-        }
-
-        // checks for user input if the user input is valid returns the valid value
-        public int ValidateUserInputForIntegers(string userInput, string message) 
-        {
-            bool isValid;
-            int amount;
-            do {
-                isValid = int.TryParse(userInput, out amount);
-                if (!isValid) {
-                    Console.WriteLine("\nYou didn't enter a number.. Please enter a number..");
-                    Console.WriteLine(message);
-                    userInput = Console.ReadLine();
-                }
-            } while (!isValid);
-            return amount;
         }
 
         // checks the total profit for the end of the game 
