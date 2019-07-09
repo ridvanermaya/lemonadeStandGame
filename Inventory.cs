@@ -14,7 +14,6 @@ namespace lemonadeStandGame
         public Pitcher pitcher;
         public bool isPitcherEmpty;
 
-
         // constructor
         public Inventory()
         {
@@ -25,6 +24,7 @@ namespace lemonadeStandGame
             pitcher = new Pitcher();
             AddItems();
         }
+
         // member methods
         public void AddItems()
         {

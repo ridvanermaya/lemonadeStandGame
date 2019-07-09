@@ -75,6 +75,10 @@ namespace lemonadeStandGame
             return ValidateUserInputForIntegers(userInput, "How many days would you like to play?");
         }
 
+        // SOLID PRINCIPLE USED
+        // Here the user is buying items for his/her lemonade stand
+        // This code is Open for expansion you can add as many items as you want and will work the same way,
+        // But it is closed for modification
         // buying item for lemonade stand
         public static double BuyItem(Items item, double balance, bool sufficentBalance)
         {

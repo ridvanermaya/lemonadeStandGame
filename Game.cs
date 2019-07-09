@@ -8,7 +8,6 @@ namespace lemonadeStandGame
         // member variables
         Player player;
         Day day;
-        Store store;
         int dayCounter;
         int daysToPlay;
         double dailyBalance;
@@ -133,7 +132,8 @@ namespace lemonadeStandGame
             }
         }
 
-        // checks the total profit for the end of the game 
+        // checks the total profit for the end of the game and writes the results to the console
+        // with different foreground color
         public void CheckForTotalProfit() {
             double totalProfit = player.balance - 20;
             totalProfit = Math.Round(totalProfit, 2);

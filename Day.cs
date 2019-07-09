@@ -22,7 +22,8 @@ namespace lemonadeStandGame
             AddNames();
         }
         // member methods
-        // this method generates random customer by ...
+        // this method generates random customer by considering the price, if the person likes lemonade,
+        // if the person likes sugar or lemon, if the person thirsty, and weather
         public void GenerateRandomCustomer(double pricePerCup, int amountOfSugar, int amountOfLemon, int amountOfIce) 
         {
             bool isThirsty;
@@ -31,7 +32,7 @@ namespace lemonadeStandGame
             bool likeLemon;
             bool caresAboutMoney;
             int randomNumberForName = rng.Next(0, names.Count);
-            double randomNumberForChanceToBuy = 0.4;
+            double randomNumberForChanceToBuy = 0.3;
             int randomNumberForThirstLevel = rng.Next(0, 11);
             int randomNumberForLikeLemonade = rng.Next(0, 11);
             int randomNumberForPriceOfLemonade = rng.Next(0, 11);
@@ -124,7 +125,7 @@ namespace lemonadeStandGame
             else if (!likeLemon && amountOfLemon < 5){
                 randomNumberForChanceToBuy += 0.1;
             }
-            
+
             if (likeSugar && amountOfSugar >= 5) {
                 randomNumberForChanceToBuy += 0.1;
             }
@@ -149,6 +150,7 @@ namespace lemonadeStandGame
             Customers.Add(customer);
         }
 
+        // adding names to my name list to use them randomly
         public void AddNames()
         {
             names.Add("Micheal");
